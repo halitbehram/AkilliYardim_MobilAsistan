@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:todo_app1/appp/screens/todo_list_page.dart';
 import 'register_page.dart'; // RegisterPage doğru yolu
-import 'home_page.dart'; // HomePage doğru yolu
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
         const SnackBar(content: Text('Giriş başarılı!')),
       );
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const HomePage()),
+        MaterialPageRoute(builder: (context) => TodoListPage()),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(

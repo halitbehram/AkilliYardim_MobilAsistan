@@ -1,13 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:todo_app1/appp/screens/home_page.dart'; // HomePage'in doğru yolu
 import 'package:todo_app1/appp/screens/login_page.dart'; // LoginPage'in doğru yolu
+import 'package:todo_app1/appp/screens/todo_list_page.dart';
 import 'firebase_options.dart'; // Firebase yapılandırma dosyası
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  const AndroidInitializationSettings initializationSettingsAndroid =
+    AndroidInitializationSettings('@mipmap/ic_launcher');
+
+  const InitializationSettings initializationSettings =
+      InitializationSettings(
+          android: initializationSettingsAndroid);
+
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
   await Firebase.initializeApp(
+    name: 'AkilliYardim',
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
@@ -24,7 +39,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Firebase Auth App',
+      title: 'AkilliYardim',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: const AuthWrapper(),
     );
@@ -49,7 +64,7 @@ class AuthWrapper extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Center(child: Text('Hata: ${snapshot.error}'));
         } else if (snapshot.hasData) {
-          return const HomePage(); // Kullanıcı giriş yaptıysa HomePage
+          return TodoListPage(); 
         } else {
           return const LoginPage(); // Kullanıcı giriş yapmadıysa LoginPage
         }
